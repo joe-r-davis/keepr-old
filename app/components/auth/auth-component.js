@@ -1,110 +1,113 @@
-(function () {
+(function() {
 
-	angular.module('ng-firebase-auth', [])
-		.component('authComponent', {
-			templateUrl: 'app/components/auth/auth.html',
-			controller: AuthController
-		})
-		.service('MemberService', function (FBREF) {
-			var as = this;
-			var db = new Firebase(FBREF);
-			var _member = {};
+    angular.module('ng-firebase-auth', [])
+        .component('authComponent', {
+            templateUrl: 'app/components/auth/auth.html',
+            controller: AuthController
+        })
+        .factory('User', function(DS) {
+            return DS.defineResource({
+                name: 'user',
+                endpoint: 'users'
+            });
+        })
+        .factory('AuthService', function(DSFirebaseAdapter, User) {
+            var db = DSFirebaseAdapter.ref;
+            var _member = {}
+            return {
+                register: register,
+                login: login,
+                logout: function() {
+                    db.unauth();
+                    _member = {};
+                },
+                getMember: authMember,
+                getAuth: function() {
+                    return db.getAuth();
+                }
+            }
+            
+            function authMember() {
+                var authData = db.getAuth();
+                if (!authData) {
+                    return false;
+                }
+                setMember(authData.uid);
+                return _member
+            }
 
-			as.setMember = function (member) {
-				for (var propName in member) {
-					_member[propName] = member[propName]
-				}
-			}
+            function setMember(id) {
+                return User.find(id).then(function(member) {
+                    Object.keys(member).forEach(function(k) {
+                        _member[k] = member[k]
+                    })
+                })
+            }
 
-			as.getMember = function () {
-				return _member
-			}
-			
-			as.getAuth = function(){
-				return db.getAuth()
-			}
-		})
+            function createUser(authData, user) {
+                var member = {
+                    id: authData.uid,
+                    username: user.username,
+                    email: user.email,
+                    created: Date.now()
+                }
+                User.create(member);
+            }
 
-	function AuthController($scope, $state, FBREF, MemberService) {
-		var ac = this;
-		var db = new Firebase(FBREF);
+            function login(user, cb) {
+                db.authWithPassword(user, function(err, authData) {
+                    if (err) {
+                        return cb(null, err)
+                    }
+                    return cb(authMember());
+                })
+            }
+            function register(user, cb) {
+                db.createUser(user, function(err, authData) {
+                    if (err) {
+                        return cb(null, err)
+                    }
+                    createUser(authData, user);
+                    login(user, cb)
+                });
+            }
+        })
 
-		ac.$onInit = activate;
+    function AuthController($scope, $state, AuthService) {
+        var ac = this;
+        ac.member = AuthService.getMember();
+        ac.login = function() {
+            clearErr();
+            AuthService.login(ac.auth, handleDBResponse);
+        };
 
-		function update(snapshot) {
-			if (snapshot) {
-				ac.member = snapshot.val();
-				MemberService.setMember(ac.member);
-			}
-			$scope.$evalAsync(function () {
-				ac = ac;
-			})
-		}
+        ac.register = function() {
+            clearErr();
+            AuthService.register(ac.auth, handleDBResponse);
+        };
 
-		function activate() {
-			getAuth();
-		}
+        ac.logout = function() {
+            clearErr();
+            AuthService.logout();
+            ac.member = {};
+            $state.go('home')
+        };
+        function update() {
+            $scope.$evalAsync();
+        }
+        function clearErr() {
+            ac.authErr = '';
+        }
 
-		ac.login = function () {
-			clearError()
-			db.authWithPassword(ac.auth).catch(handleError).then(getAuth)
-		}
-
-		ac.register = function () {
-			clearError()
-			db.createUser(ac.auth).catch(handleError).then(registerMember)
-		}
-
-
-		function getAuth() {
-			var authData = db.getAuth()
-			if (authData) {
-				ac.userRef = db.child('users').child(authData.uid);
-				ac.userRef.on('value', update)
-				closeModal()
-			} else {
-				showModal()
-			}
-		}
-
-		function showModal() {
-			ac.activeView = 'login'
-			update()
-		}
-
-		function closeModal() {
-			ac.activeView = ''
-			update()
-		}
-
-		function registerMember(authData) {
-			if (authData.error) {
-				return authData.error;
-			}
-			var member = {
-				username: ac.auth.username,
-				email: ac.auth.email,
-				id: authData.uid
-			}
-			db.child('users').child(authData.uid).set(member)
-			ac.login()
-		}
-
-		function handleError(err) {
-			ac.err = err.message
-			return err;
-		}
-
-		function clearError() {
-			ac.error = null;
-		}
-
-		ac.logout = function () {
-			ac.userRef.off('value', update);
-			ac.member = null;
-			db.unauth();
-			$state.go('home')
-		}
-
-	}
+        function handleDBResponse(member, err) {
+            if (member) {
+                ac.member = member;
+                ac.activeView = ''
+            } 
+            if(err) {
+                ac.error = err.message;
+            }
+            update()
+        }
+    }
 } ())
