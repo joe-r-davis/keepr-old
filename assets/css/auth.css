@@ -113,6 +113,7 @@ header[role=banner]::after {
   -ms-transform: translateY(50px);
   -o-transform: translateY(50px);
   transform: translateY(50px);
+  z-index: 999;
 }
 .main-nav a {
   display: block;

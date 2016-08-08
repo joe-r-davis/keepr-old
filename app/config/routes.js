@@ -11,8 +11,8 @@
 					abstract: true,
 					template: '<div class="content"><ui-view></ui-view></div>',
 					resolve: {
-						isAuthed: function(MemberService, $state){
-							if(!MemberService.getAuth()){
+						isAuthed: function(AuthService, $state){
+							if(!AuthService.getAuth()){
 								return $state.go('home')
 							}
 						}

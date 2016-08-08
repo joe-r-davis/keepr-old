@@ -8,7 +8,10 @@ Keepr has some basic structure and layout but its missing some key components. L
 
 ###Step 1 -  Where is the output? `Total Points: 5`
 
-The keeps that you currently can see are actually just dummy data. Be sure to look at the structure of the objects before removing them you will need to ensure your keeps have the same properties. Your first step is to tie the input form on the `/#/members` page to a location in firebase. The route in firebase should be `/keeps`. You will also need to add some other functionality like a way for users to group their keeps in vaults. Try storing the vaults in firebase under `/users/<YOURUSERID>/vaults` This way your vaults are kept private. Also be sure to store the author of the keep username.
+The keeps that you currently can see are actually just dummy data. Be sure to look at the structure of the objects before removing them you will need to ensure your keeps have the same properties. Your first step is to tie the input form on the `/#/members` page to a location in firebase. The route in firebase should be `/keeps`. You will also need to add some other functionality like a way for users to group their keeps in vaults. Try storing the vaults in firebase under `FBREF+ 'users/'+<YOURUSERID>+'/vaults'` This way your vaults are kept private. Also be sure to store the author of the keep username.
+
+addVault Function 
+
 
 Requirements:
 - `2.5 points`: Users can add a keep to firebase

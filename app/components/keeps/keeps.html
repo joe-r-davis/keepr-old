@@ -1,19 +1,30 @@
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-10 col-sm-offset-1">
-			<div class="input-group">
-				<input type="text" class="form-control" ng-model="$ctrl.query" placeholder="Search...">
-				<span class="input-group-btn">
-				<button class="btn btn-theme" type="button"><i class="fa fa-search"></i></button>
-      </span>
-			</div>
-		</div>
-	</div>
-	<div class="gallery">
-		<div class="media-bank">
-			<div class="media-content" ng-repeat="keep in $ctrl.keeps | filter: $ctrl.query">
-				<keep-component keep="keep"></keep-component>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="$ctrl.query" placeholder="Search...">
+                <span class="input-group-btn">
+				    <button class="btn btn-theme" type="button"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="gallery">
+        <div class="media-bank">
+            <div class="media-content" ng-repeat="keep in $ctrl.keeps | filter: $ctrl.query">
+                <keep-component keep="keep" on-keep-click="$ctrl.saveKeep"></keep-component>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="$ctrl.showMemberVaults">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="(id, vault) in $ctrl.member.vaults">
+            <a ng-click="$ctrl.selectVault(vault, id)">
+                <h4>{{vault.title}}</h4>
+                <p>{{vault.description}}</p>
+            </a>
+        </li>
+    </ul>
 </div>
