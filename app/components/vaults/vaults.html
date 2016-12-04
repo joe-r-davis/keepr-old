@@ -1,0 +1,22 @@
+<div class="add-vault-form">
+	<form class="form" ng-submit="$ctrl.addVault($ctrl.newVault)">
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Title" ng-model="$ctrl.newVault.title">
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="description" ng-model="$ctrl.newVault.description">
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<button class="btn btn-theme btn-block" type="submit">Keep</button>
+			</div>
+			<div class="col-sm-6">
+				<button class="btn btn-info btn-block" type="reset">Reset</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="my-vaults">
+	<h2>You should be able to manage your individual vaults here and browse their contents</h2>
+</div>

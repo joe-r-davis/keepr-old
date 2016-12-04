@@ -1,30 +1,53 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-10 col-sm-offset-1">
-            <div class="input-group">
-                <input type="text" class="form-control" ng-model="$ctrl.query" placeholder="Search...">
-                <span class="input-group-btn">
-				    <button class="btn btn-theme" type="button"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="gallery">
-        <div class="media-bank">
-            <div class="media-content" ng-repeat="keep in $ctrl.keeps | filter: $ctrl.query">
-                <keep-component keep="keep" on-keep-click="$ctrl.saveKeep"></keep-component>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-1">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="$ctrl.query" placeholder="Search...">
+				<span class="input-group-btn">
+					<button class="btn btn-theme" type="button"><i class="fa fa-search"></i></button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="gallery">
+
+		<div class="col-sm-3" style="margin: .6em 0;" ng-repeat="keep in $ctrl.keeps | filter: $ctrl.query">
+			<div class="keep">
+				<div class="keep-img">
+					<img ng-src="{{keep.imgUrl}}" alt="Image title">
+				</div>
+				<div class="keep-details">
+					<hr>
+					<div class="highlights text-muted text-center">
+						<span><span class="theme-font">k:</span>{{keep.keepCount}}</span>
+						<span><i class="fa fa-share"></i>: {{keep.shareCount}}</span>
+						<span><i class="fa fa-eye"></i>: {{keep.viewCount}}</span>
+					</div>
+					<hr>
+					<h3>{{keep.title}}</h3>
+					<div class="caption">
+						<p>{{keep.body}}</p>
+						<hr>
+						<p class="text-center">
+							<a class="btn btn-theme" role="button" ng-click="$ctrl.onKeepClick(keep)">K</a>
+							<a class="btn btn-default" role="button"><i class="fa fa-share"></i></a>
+							<a class="btn btn-info" role="button" href="{{keep.link}}" target="_blank"><i class="fa fa-eye"></i></a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 </div>
 
 <div ng-show="$ctrl.showMemberVaults">
-    <ul class="list-group">
-        <li class="list-group-item" ng-repeat="(id, vault) in $ctrl.member.vaults">
-            <a ng-click="$ctrl.selectVault(vault, id)">
-                <h4>{{vault.title}}</h4>
-                <p>{{vault.description}}</p>
-            </a>
-        </li>
-    </ul>
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="(id, vault) in $ctrl.member.vaults">
+			<a ng-click="$ctrl.selectVault(vault, id)">
+				<h4>{{vault.title}}</h4>
+				<p>{{vault.description}}</p>
+			</a>
+		</li>
+	</ul>
 </div>

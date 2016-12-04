@@ -6,10 +6,21 @@
             controller: AuthController
         })
         .factory('User', function(DS) {
+
+						
             return DS.defineResource({
                 name: 'user',
-                endpoint: 'users'
+                endpoint: 'users',
+								relations: {
+									hasMany: {
+										keep: {
+											localField: 'keeps',
+											localKey: 'userId'
+										}
+									}
+								}
             });
+
         })
         .factory('AuthService', function(DSFirebaseAdapter, User) {
             var db = DSFirebaseAdapter.ref;
@@ -23,7 +34,7 @@
                 },
                 getMember: authMember,
                 getAuth: function() {
-                    return db.getAuth();
+                    return db.getAuth()
                 }
             }
             

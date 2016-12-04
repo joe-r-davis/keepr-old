@@ -1,45 +1,33 @@
-(function() {
+;(function () {
+  angular.module('keepr')
+    .component('membersComponent', {
+      templateUrl: 'app/components/members/members.html',
+      controller: MembersController
+    })
 
-    angular.module('keepr')
-        .component('membersComponent', {
-            templateUrl: 'app/components/members/members.html',
-            controller: MembersController
-        })
+  function MembersController (AuthService, $state, Models) {
+    var mc = this
+    mc.show = 'k'
 
-
-    function MembersController(AuthService, $state) {
-        var mc = this;
-        mc.show = 'keeps'
-
-        mc.addKeep = function(keep) {
-            keep.author = mc.member
-            keep.viewCount = 0;
-            keep.shareCount = 0;
-            keep.keepCount = 0;
-            keeps.$add(keep);
-            mc.newKeep = null
-        }
-
-        mc.addVault = function(vault) {
-            
-        }
-
-        mc.toggleView = function(viewName) {
-            if (mc.show == viewName) {
-                mc.show = 'keeps'
-            } else {
-                mc.show = viewName
-            }
-        }
-
-        this.$onInit = function() {
-            if (!AuthService.getAuth()) {
-                return $state.go('home')
-            }
-            mc.member = AuthService.getMember();
-        }
-
+    mc.toggleView = function (viewName) {
+      mc.show = viewName
     }
 
+    // This method is called whenever the component is initialized
+    // You can safely put this snippet into any component if you need 
+    // the member info for that component
+    this.$onInit = function () {
+      if (!AuthService.getAuth()) {
+        return $state.go('home')
+      }
+			//Note that the User is the auth object from the firebase authentication
+			//This user object is read only you cannot directly modify it
+			mc.user = AuthService.getAuth()
+			
+			//The member is the data that we store about the user in our database
+			//You can put any property on the member 
+      mc.member = AuthService.getMember()
 
-} ())
+    }
+  }
+}())

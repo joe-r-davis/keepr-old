@@ -7,7 +7,6 @@ html * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-	
 
 *, *:after, *:before {
   -webkit-box-sizing: border-box;
@@ -16,7 +15,6 @@ html * {
 }
 
 body {
-  font-size: 100%;
   font-family: "PT Sans", sans-serif;
   color: #505260;
   background-color: white;
@@ -34,7 +32,7 @@ img {
 input, textarea {
   font-family: "PT Sans", sans-serif;
   font-size: 16px;
-  font-size: 1rem;
+  font-size: 1.4em;
 }
 input::-ms-clear, textarea::-ms-clear {
   display: none;
@@ -97,6 +95,7 @@ header[role=banner]::after {
   cursor: pointer;
 }
 .main-nav ul {
+	list-style: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -108,6 +107,7 @@ header[role=banner]::after {
   transform: translateY(-100%);
 }
 .main-nav ul.is-visible {
+	list-style: none;
   -webkit-transform: translateY(50px);
   -moz-transform: translateY(50px);
   -ms-transform: translateY(50px);
@@ -142,6 +142,7 @@ header[role=banner]::after {
     line-height: 80px;
   }
   .main-nav ul.is-visible {
+		list-style: none;
     -webkit-transform: translateY(0);
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -164,7 +165,7 @@ header[role=banner]::after {
   .main-nav a.cd-signin, .main-nav a.cd-signup {
     padding: .6em 1em;
     border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 50em;
+    /*border-radius: 50em;*/
   }
   .main-nav a.cd-signup {
     background: #FC0096;
@@ -215,7 +216,7 @@ xsigin/signup popup
   background: #FFF;
   margin: 3em auto 4em;
   cursor: auto;
-  border-radius: 0.25em;
+  /*border-radius: 0.25em;*/
   -webkit-transform: translateY(-30px);
   -moz-transform: translateY(-30px);
   -ms-transform: translateY(-30px);
@@ -239,10 +240,10 @@ xsigin/signup popup
   text-align: center;
 }
 .cd-user-modal-container .cd-switcher li:first-child a {
-  border-radius: .25em 0 0 0;
+  /*border-radius: .25em 0 0 0;*/
 }
 .cd-user-modal-container .cd-switcher li:last-child a {
-  border-radius: 0 .25em 0 0;
+  /*border-radius: 0 .25em 0 0;*/
 }
 .cd-user-modal-container .cd-switcher a {
   display: block;
@@ -281,7 +282,7 @@ xsigin/signup popup
 }
 .cd-form label {
   font-size: 14px;
-  font-size: 0.875rem;
+  font-size: 1.2em;
 }
 .cd-form label.image-replace {
   /* replace text with an icon */
@@ -317,7 +318,7 @@ xsigin/signup popup
 .cd-form input {
   margin: 0;
   padding: 0;
-  border-radius: 0.25em;
+  /*border-radius: 0.25em;*/
 }
 .cd-form input.full-width {
   width: 100%;
@@ -377,7 +378,7 @@ xsigin/signup popup
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
   font-size: 14px;
-  font-size: 0.875rem;
+  font-size: 0.875em;
   color: #343642;
 }
 .cd-form .cd-error-message {
@@ -390,8 +391,8 @@ xsigin/signup popup
   z-index: 2;
   color: #FFF;
   font-size: 13px;
-  font-size: 0.8125rem;
-  border-radius: 0.25em;
+  font-size: 1.25em;
+  /*border-radius: 0.25em;*/
   /* prevent click and touch events */
   pointer-events: none;
   visibility: hidden;
@@ -443,7 +444,7 @@ xsigin/signup popup
 .cd-form-message {
   padding: 1.4em 1.4em 0;
   font-size: 14px;
-  font-size: 0.875rem;
+  font-size: 1.25em;
   line-height: 1.4;
   text-align: center;
 }
@@ -460,7 +461,7 @@ xsigin/signup popup
   bottom: -30px;
   text-align: center;
   font-size: 14px;
-  font-size: 0.875rem;
+  font-size: 1.25em;
 }
 .cd-form-bottom-message a {
   color: #FFF;
@@ -492,4 +493,10 @@ xsigin/signup popup
 
 #cd-login.is-selected, #cd-signup.is-selected, #cd-reset-password.is-selected {
   display: block;
+}
+
+ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
