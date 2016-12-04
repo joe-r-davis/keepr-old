@@ -30,7 +30,7 @@ Requirements:
 
 ###Step 3 - Prettify `Total Points: 5`
 
-What this site is already pretty. :) Make sure the feature you add are attactive.  
+What this site is already pretty. :) Make sure the features you add are attactive.  
 
 Requirements:
 - `5 points`: When hovering over the keep show the three buttons from the bottm overlaid on the image
